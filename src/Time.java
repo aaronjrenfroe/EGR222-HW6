@@ -75,6 +75,9 @@ public class Time {
 
         return this.minute%60;
     }
+    public int getTotalMinutes(){
+        return this.minute;
+    }
 
 
     //if am is false returns true

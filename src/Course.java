@@ -1,9 +1,11 @@
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
  * Created by AaronR on 11/15/16.
  */
+
 public class Course {
 
     private String name;
@@ -30,21 +32,83 @@ public class Course {
             this.duration = duration;
         }
     }
-
+    // test this
     public boolean conflictsWith(Course course){
-        return true;
+        Set<Weekday> days = course.getDays();
+        for (Weekday testDay: days) {
+
+            if (this.days.contains (testDay)){
+                int startTimeInMin = course.getTime().getTotalMinutes();
+                int endTimeInMinutes = startTimeInMin + course.getDuration();
+                int thisStart = this.getTime().getTotalMinutes();
+                int thisEnd = thisStart + this.getDuration();
+                if (startTimeInMin <= thisStart || thisStart <= thisEnd){
+                    return true;
+                }
+
+            }
+        }
+        return false;
 
     }
 
     public boolean contains(Weekday day, Time time){
-        return true;
+        if(this.days.contains(day)){
+
+            if (this.startTime.getTotalMinutes() <= time.getTotalMinutes()
+                    || time.getTotalMinutes() <= this.startTime.getTotalMinutes()+duration) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean equals(Object o) {
-        return super.equals(o);
+        Course oCourse = (Course) o;
+
+        boolean returnValue =  (this.name == oCourse.getName()
+                && this.credits == oCourse.getCredits()
+                && this.duration == oCourse.getDuration()
+                && this.getTime().equals(oCourse.getTime())
+                && this.days.equals(oCourse.getDays()));
+
+        return returnValue;
+
+    }
+
+    @Override
+    public int hashCode() {
+
+        return 17*331 * this.name.hashCode() * this.startTime.hashCode();
     }
     // accessor methods
+
+
+    @Override
+    public String toString() {
+        String outString =  this.name + ", " + this.credits + ", ";
+
+        if (this.days.contains(Weekday.MONDAY)){
+            outString += "M";
+        }
+        if (this.days.contains(Weekday.TUESDAY)){
+            outString += "T";
+        }
+        if (this.days.contains(Weekday.WEDNESDAY)){
+            outString += "W";
+        }
+        if (this.days.contains(Weekday.THURSDAY)){
+            outString += "R";
+        }
+        if (this.days.contains(Weekday.FRIDAY)){
+            outString += "F";
+        }
+        outString += ", " + this.startTime.toString() + ", " + this.duration;
+
+        return outString;
+    }
+
     public int getCredits(){
         return this.credits;
 
@@ -61,6 +125,9 @@ public class Course {
     public Time getTime(){
         return this.startTime;
 
+    }
+    public Set<Weekday> getDays(){
+        return this.days;
     }
 
     private void emptyDays(){
