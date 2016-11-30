@@ -1,5 +1,5 @@
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Test;
+import org.junit.Assert;
 
 /**
  * Created by AaronR on 11/16/16.
