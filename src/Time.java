@@ -1,8 +1,10 @@
+import java.util.Comparator;
+
 /**
  * Created by AaronR on 11/9/16.
  */
 
-public class Time {
+public class Time implements Cloneable, Comparable{
 
     private int minute;
     //1440 is max
@@ -37,7 +39,7 @@ public class Time {
             if ((str.charAt(2) == ':')
                     && (str.charAt(5) == ' ')
                     && (str.toLowerCase().charAt(7) == 'm')
-                    && (str.toLowerCase().charAt(6) == 'a' || str.toLowerCase().charAt(6) == 'p')) {
+                    && (str.charAt(6) == 'A' || str.charAt(6) == 'P')) {
 
                 h = Integer.parseInt(str.substring(0, 2));
                 m = Integer.parseInt(str.substring(3, 5));
@@ -46,9 +48,10 @@ public class Time {
                     throw new IllegalArgumentException("Numbers are out of bounds");
                 }
 
-                if (str.charAt(6) == 'a') {
+                if (str.charAt(6) == 'A') {
                     pm = false;
                 } else pm = true;
+
                 return new Time(h, m, pm);
             }
 
@@ -90,7 +93,7 @@ public class Time {
         return this.minute;
     }
 
-    public void shift(int minutes){
+    public Time shift(int minutes){
         if (minutes < 0) {
 
             throw new IllegalArgumentException("Minutes shifted must be positive");
@@ -101,6 +104,7 @@ public class Time {
 
             minute = minute%1440;
         }
+        return this;
     }
 
     //returns true if given time object has same state as this one
@@ -148,6 +152,31 @@ public class Time {
 
         return hourStr +":"+ minStr +" "+ amOrPm;
     }
+
+    @Override
+    public Time clone(){
+        Time clonedTime = new Time(this.getHour(), this.getMinute(), this.isPM());
+        return clonedTime;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Time cTime = (Time)o;
+        //
+        int t1 = this.getTotalMinutes();
+        int t2 = cTime.getTimeInMinutes();
+        if (t1 < t2){
+            return -1;
+        }
+        else if (t1 == t2){
+            return 0;
+
+        }
+        else {
+            return 1;
+        }
+    }
+
     private static boolean checkArgs(int h, int m){
         return (h > 12 || m > 59 || h < 1 || m < 0);
     }

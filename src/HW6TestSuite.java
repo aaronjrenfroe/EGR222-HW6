@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
  */
 
 
-@RunWith(Suit.class)
+@RunWith(Suite.class)
 @Suite.SuiteClasses({
         CourseTest.class,
         TimeTest.class,
@@ -19,7 +19,3 @@ import org.junit.runners.Suite;
 public class HW6TestSuite {
 
 }
-
-
-
-

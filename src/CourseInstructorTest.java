@@ -104,8 +104,11 @@ public class CourseInstructorTest {
         Time startTime = new Time (5, 0, true);
         Set<Weekday> days =  EnumSet.of(Weekday.MONDAY, Weekday.WEDNESDAY, Weekday.FRIDAY);
         Course egr222 = new Course("EGR 222", 3, days, startTime, 60);
+
         Assert.assertTrue(Time.fromString("05:00 PM").equals(egr222.getStartTime()));
+
         startTime.shift(90);
+
         Assert.assertTrue(Time.fromString("06:30 PM").equals(startTime));
         Assert.assertFalse(startTime.equals(egr222.getStartTime()));
         Assert.assertTrue(Time.fromString("05:00 PM").equals(egr222.getStartTime()));
@@ -124,6 +127,7 @@ public class CourseInstructorTest {
 
     @Test
     public void containsTest(){
+
         containsTestHelper(true, "10:00 AM", "MWF", 1, Weekday.FRIDAY, new Time(10, 0, false));
         containsTestHelper(false, "10:00 AM", "MWF", 1, Weekday.TUESDAY, new Time(10, 0, false));
         containsTestHelper(false, "10:00 AM", "MWF", 1, Weekday.FRIDAY, new Time(10, 1, false));

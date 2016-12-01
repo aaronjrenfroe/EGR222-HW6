@@ -20,11 +20,11 @@ public class CourseTest {
         days.add(Weekday.WEDNESDAY);
         days.add(Weekday.FRIDAY);
 
-        Course chem1 = new Course("Chemistry", 3, days, new Time(12, 00, true), 60);
+        Course chem1 = new Course("CHE 101", 3, days, new Time(12, 00, true), 60);
 
-        Assert.assertEquals(chem1.getName(), "Chemistry");
+        Assert.assertEquals(chem1.getName(), "CHE 101");
         Assert.assertEquals(chem1.getCredits(), 3);
-        Assert.assertEquals(chem1.getTime(), new Time (12, 00, true));
+        Assert.assertEquals(chem1.getStartTime(), new Time (12, 00, true));
         Assert.assertEquals(chem1.getDuration(), 60);
 
     }
@@ -39,13 +39,13 @@ public class CourseTest {
         days2.add(Weekday.THURSDAY);
         days2.add(Weekday.TUESDAY);
 
-        Course chem1 = new Course("Chemistry", 3, days1, new Time(12, 00, true), 60);
-        Course chem2 = new Course("Chemistry2", 3, days1, new Time(12, 30, true), 60);
-        Course EGR222 = new Course("Software Engineering", 3, days2, new Time(12, 30, true), 60);
-        Assert.assertEquals(chem1.conflictsWith(chem2), true);
-        Assert.assertEquals(EGR222.conflictsWith(chem1), false);
+        Course chem1 = new Course("Che 222", 3, days1, new Time(12, 00, true), 2);
+        Course chem2 = new Course("Che 223", 3, days1, new Time(12, 01, true), 1);
+        Course EGR222 = new Course("EGR 222", 3, days2, new Time(12, 30, true), 60);
+        Assert.assertEquals(true, chem1.conflictsWith(chem2));
+        Assert.assertEquals(false, EGR222.conflictsWith(chem1));
 
-        //Assert.assertEquals();
+
     }
 
     @Test
@@ -55,9 +55,12 @@ public class CourseTest {
         days1.add(Weekday.WEDNESDAY);
         days1.add(Weekday.FRIDAY);
 
-        Course chem1 = new Course("Chemistry", 3, days1, new Time(12, 00, true), 60);
-        Assert.assertEquals(chem1.contains(Weekday.FRIDAY, new Time(12, 30, true)), true);
-        Assert.assertEquals(chem1.contains(Weekday.THURSDAY, new Time(12, 30, true)), false);
+        Course chem1 = new Course("CHE 101", 3, days1, new Time(12, 00, true), 60);
+        Assert.assertEquals(true, chem1.contains(Weekday.FRIDAY, new Time(12, 30, true)));
+        Assert.assertEquals(false, chem1.contains(Weekday.THURSDAY, new Time(12, 30, true)));
+
+        Assert.assertEquals(false, chem1.contains(Weekday.THURSDAY, new Time(12, 1, false)));
+
 
     }
 
@@ -72,14 +75,14 @@ public class CourseTest {
         days2.add(Weekday.THURSDAY);
         days2.add(Weekday.TUESDAY);
 
-        Course chem1a = new Course("Chemistry", 3, days1, new Time(12, 00, true), 60);
-        Course chem1b = new Course("Chemistry", 3, days1, new Time(12, 00, true), 60);
-        Course chem2a = new Course("Chemistry2", 3, days1, new Time(12, 30, true), 90);
-        Course EGR222 = new Course("Software Engineering", 3, days2, new Time(12, 30, true), 60);
+        Course chem1a = new Course("CHE 101", 3, days1, new Time(12, 00, true), 60);
+        Course chem1b = new Course("CHE 101", 3, days1, new Time(12, 00, true), 60);
+        Course chem2a = new Course("CHE 102", 3, days1, new Time(12, 30, true), 90);
+        Course EGR222 = new Course("SWE 222", 3, days2, new Time(12, 30, true), 60);
 
-        Assert.assertEquals(chem1a.equals(chem1b), true);
-        Assert.assertEquals(chem1a.equals(EGR222), false);
-        Assert.assertEquals(chem1a.equals(chem2a), false);
+        Assert.assertEquals(true, chem1a.equals(chem1b));
+        Assert.assertEquals(false, chem1a.equals(EGR222));
+        Assert.assertEquals(false, chem1a.equals(chem2a));
     }
 
     @Test
@@ -97,8 +100,8 @@ public class CourseTest {
 
         Course egr222 = new Course("EGR 222", 3, days2, new Time(12, 30, true), 60);
 
-        Assert.assertEquals(chem1a.toString(), "Chm 101-A, 3, MWF, 12:00 PM, 60");
-        Assert.assertEquals(egr222.toString(), "EGR 222, 3, TR, 12:30 PM, 60");
+        Assert.assertEquals("Chm 101-A, 3, MWF, 12:00 PM, 60", chem1a.toString());
+        Assert.assertEquals("EGR 222, 3, TR, 12:30 PM, 60", egr222.toString());
     }
 
 
