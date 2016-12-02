@@ -78,9 +78,6 @@ public class Time implements Cloneable, Comparable{
 
         return this.minute%60;
     }
-    public int getTotalMinutes(){
-        return this.minute;
-    }
 
 
     //if am is false returns true
@@ -89,7 +86,7 @@ public class Time implements Cloneable, Comparable{
         return this.minute >= 720 ;
     }
 
-    public int getTimeInMinutes(){
+    private int getTimeInMinutes(){
         return this.minute;
     }
 
@@ -163,7 +160,7 @@ public class Time implements Cloneable, Comparable{
     public int compareTo(Object o) {
         Time cTime = (Time)o;
         //
-        int t1 = this.getTotalMinutes();
+        int t1 = this.minute;
         int t2 = cTime.getTimeInMinutes();
         if (t1 < t2){
             return -1;
