@@ -37,7 +37,7 @@ public class ScheduleTest {
         // should be 6 after removing the 3 unit class
         Assert.assertEquals(true, mySchedule.totalCredits() == 6);
         mySchedule.remove(Weekday.TUESDAY, new Time(3, 0, true));
-        
+
         // should not have done anything
 
         Assert.assertEquals(true, mySchedule.totalCredits() == 6);
