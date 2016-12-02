@@ -1,3 +1,5 @@
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+
 import java.io.PrintStream;
 import java.util.*;
 
@@ -5,14 +7,37 @@ import java.util.*;
  * Created by AaronR on 12/1/16.
  */
 public class Schedule implements Cloneable{
-    List<Course> courses = new ArrayList<Course>();;
+
+    private List<Course> courses = new ArrayList<Course>();;
     // constructor
     public void Schedule() {}
 
     //adds given course to Set Courses
     public void add(Course addCourse) {
-        this.courses.add(addCourse);
+
+        if (courses.size() == 0 || !addHelper(addCourse)){
+
+            this.courses.add(addCourse);
+        }
     }
+    // helper method to check if course to be added conflicts with existing courses
+    private boolean addHelper(Course addCourse){
+        Iterator<Course> courseIterator = this.courses.iterator();
+        while (courseIterator.hasNext()) {
+            Course curCourse = courseIterator.next();
+            try {
+                if (curCourse.conflictsWith(addCourse)) {
+
+                    throw new ScheduleConflictException("" + curCourse.getName() + " " + " conflicts with " + addCourse.getName());
+                }
+            } catch (ScheduleConflictException er) {
+                System.out.println(er);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     // returns course if it takes place on that given time else returns null
     public Course getCourse(Weekday day, Time time) {
@@ -28,8 +53,7 @@ public class Schedule implements Cloneable{
 
     //removes course if it falls on given time
     public void remove(Weekday day, Time time){
-        System.out.println("Remove ran");
-        System.out.println(" " + day + ", at "+ time);
+
         if (day != null) {
             Iterator<Course> courseIterator = this.courses.iterator();
             while (courseIterator.hasNext()) {
@@ -37,7 +61,7 @@ public class Schedule implements Cloneable{
                 if (curCourse.contains(day, time)) {
 
                     this.courses.remove(curCourse);
-                    System.out.println("Remove ran2");
+
                     return;
 
                 }
