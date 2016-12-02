@@ -65,6 +65,7 @@ public class Schedule implements Cloneable{
     }
 
     @Override
+    // clones course
     public Schedule clone(){
         Schedule newSched = new Schedule();
         newSched.courses.addAll(this.courses);

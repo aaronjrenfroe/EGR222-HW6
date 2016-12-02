@@ -7,7 +7,7 @@ public enum Weekday {
 
     MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY;
 
-
+    // constructor accepts weekday in string format creates an enumeration
     public static Weekday fromString(String strDay) {
         strDay = strDay.toLowerCase();
         // I chose this way over another wecasue of readabilty
@@ -36,7 +36,7 @@ public enum Weekday {
                 throw new IllegalArgumentException("User input did not match any know weekday");
         }
     }
-
+    // returns short form of week day
     public String toShortName() {
 
         switch (this){
@@ -52,7 +52,7 @@ public enum Weekday {
                 return "F";
         }
     }
-
+    // returns String form of weekday
     @Override
     public String toString() {
         switch (this) {

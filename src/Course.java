@@ -15,9 +15,9 @@ public class Course {
     private Time startTime;
     private Set<Weekday> days;
 
-
+    // constructor
     public Course(String name, int credits, Set<Weekday> days, Time startTime, int duration){
-
+        // check if args are invalid
         if (credits < 1 || credits > 5){
            dumbCredits(credits);
         }
@@ -43,7 +43,8 @@ public class Course {
             this.duration = duration;
         }
     }
-    // test this
+
+    // checks if arg course conflicts with this course
     public boolean conflictsWith(Course course){
         Set<Weekday> days = course.getDays();
         Iterator<Weekday> dayIter = days.iterator();
@@ -62,7 +63,7 @@ public class Course {
         }
         return false;
     }
-
+    // checks if given day and time conflicts with course
     public boolean contains(Weekday day, Time time){
         if(this.days.contains(day)){
 
@@ -79,7 +80,7 @@ public class Course {
         }
         return false;
     }
-
+    // checks if given course is equal to this course
     @Override
     public boolean equals(Object o) {
         Course oCourse = (Course) o;
@@ -93,7 +94,7 @@ public class Course {
         return returnValue;
 
     }
-
+    // hash browns
     @Override
     public int hashCode() {
 
@@ -101,7 +102,7 @@ public class Course {
     }
     // accessor methods
 
-
+    // converts course to a readable string format
     @Override
     public String toString() {
         String outString =  this.name + ", " + this.credits + ", ";
@@ -125,34 +126,40 @@ public class Course {
 
         return outString;
     }
-
+    // returns this courses gredit value
     public int getCredits(){
         return this.credits;
 
     }
+    // returns this courses duration in minutes
     public int getDuration(){
         return this.duration;
 
     }
+    // returns this courses name as a string
     public String getName(){
         return this.name;
 
     }
-
+    // returns this courses start time
     public Time getStartTime(){
         return this.startTime;
 
     }
+    //returns this courses end time.
     public Time getEndTime(){
+
         Time endTime = this.startTime.clone();
         endTime.shift(this.duration);
         return endTime;
 
     }
+    // returns the days this course is scheduled for
     public Set<Weekday> getDays(){
         return this.days;
     }
 
+    // illegal argument throwers
     private void emptyDays(){
         throw new IllegalArgumentException(" Set of days was found to be Empty");
     }

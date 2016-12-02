@@ -35,11 +35,11 @@ public class TimeTest {
 
     @Test
     public void constNegativeTest(){
-        constNegativeHelper(0,59, true); //00:59 PM is invalid
-        constNegativeHelper(13,59, true); //13:59 PM is invalid
-        constNegativeHelper(-5,59, false); //-5:59 AM is invalid
+        constNegativeHelper(0,53, true); //00:59 PM is invalid
+        constNegativeHelper(15,52, true); //13:59 PM is invalid
+        constNegativeHelper(-2,31, false); //-5:59 AM is invalid
         constNegativeHelper(11,60, false); //11:60 AM is invalid
-        constNegativeHelper(11,-1, false); //11:-1 AM is invalid
+        constNegativeHelper(11,-10, false); //11:-1 AM is invalid
     }
 
     @Test
@@ -57,21 +57,21 @@ public class TimeTest {
 
     @Test
     public void toStringTest() {
-        Time t = new Time(3, 1, false);
-        Assert.assertEquals("03:01 AM", t.toString());
+        Time t = new Time(3, 11, false);
+        Assert.assertEquals("03:11 AM", t.toString());
 
-        Time t2 = new Time(12, 20, false);
-        Assert.assertEquals("12:20 AM", t2.toString());
+        Time t2 = new Time(12, 21, false);
+        Assert.assertEquals("12:21 AM", t2.toString());
 
-        Time t3 = new Time(6, 0, true);
-        Assert.assertEquals("06:00 PM", t3.toString());
+        Time t3 = new Time(6, 01, true);
+        Assert.assertEquals("06:01 PM", t3.toString());
 
     }
 
     @Test
     public void equalsTest(){
-        Time t = new Time(5, 0, false);
-        Time t2 = new Time(5, 0, false);
+        Time t = new Time(5, 1, false);
+        Time t2 = new Time(5, 1, false);
         Time t3 = t;
 
         Assert.assertTrue(t.equals(t2));
@@ -112,10 +112,10 @@ public class TimeTest {
 
     @Test
     public void hashCodeTest(){
-        Time t = new Time(5, 0, false);
+        Time t = new Time(5, 1, false);
         t.shift(10);
 
-        Time t2 = new Time(5, 10, false);
+        Time t2 = new Time(5, 11, false);
         Assert.assertTrue(t.equals(t2));
         Assert.assertTrue(t2.equals(t));
         Assert.assertEquals(t.hashCode(), t2.hashCode());
@@ -124,15 +124,15 @@ public class TimeTest {
     @Test
     public void hashSetTest(){
         Set<Time> set = new HashSet<Time>();
-        Time t = new Time(12, 59, false);
+        Time t = new Time(12, 58, false);
         set.add(t);
 
-        Time t2 = new Time(12, 59, false);
+        Time t2 = new Time(12, 58, false);
         Assert.assertTrue(set.contains(t2));
 
         set.remove(t2);
         Assert.assertFalse(set.contains(t2));
-        Assert.assertFalse(set.contains(new Time(12, 59, false)));
+        Assert.assertFalse(set.contains(new Time(12, 58, false)));
     }
 
     @Test
@@ -156,7 +156,7 @@ public class TimeTest {
         t.shift(1259); //Add 20 hours 59 minute
         Assert.assertEquals("09:08 PM", t.toString());
 
-        t.shift(172); //Add 2 hours 52 min
-        Assert.assertEquals("12:00 AM", t.toString());
+        t.shift(173); //Add 2 hours 53 min
+        Assert.assertEquals("12:01 AM", t.toString());
     }
 }

@@ -10,7 +10,7 @@ public class Time implements Cloneable, Comparable{
     //1440 is max
     //720 is 12:00
 
-
+    // constructor
     public Time( int h, int m, boolean pm){
         if (checkArgs(h,m)){
             throw new IllegalArgumentException("Something went wrong when creating your time Class");
@@ -61,6 +61,7 @@ public class Time implements Cloneable, Comparable{
     }
 
     //accessor methods
+    // returns hour
     public int getHour(){
 
         int hour = (minute/60);
@@ -74,6 +75,7 @@ public class Time implements Cloneable, Comparable{
 
         return hour;
     }
+    // returns minutes
     public int getMinute(){
 
         return this.minute%60;
@@ -85,11 +87,13 @@ public class Time implements Cloneable, Comparable{
     public boolean isPM(){
         return this.minute >= 720 ;
     }
-
+    // returns time in minutes, used internally
     private int getTimeInMinutes(){
         return this.minute;
     }
 
+    // shifts moves time forward by number of minutes passed.
+    // also returns new current time
     public Time shift(int minutes){
         if (minutes < 0) {
 
@@ -123,7 +127,7 @@ public class Time implements Cloneable, Comparable{
 
         return false;
     }
-
+    // hash browns
     @Override
     public int hashCode() {
         int result = 17;
@@ -133,7 +137,7 @@ public class Time implements Cloneable, Comparable{
 
         return result;
     }
-
+    // converts time to readable string
     @Override
     public String toString() {
         // pads string with 0's width of 2
@@ -149,13 +153,13 @@ public class Time implements Cloneable, Comparable{
 
         return hourStr +":"+ minStr +" "+ amOrPm;
     }
-
+    // returns a deep copy of this Time
     @Override
     public Time clone(){
         Time clonedTime = new Time(this.getHour(), this.getMinute(), this.isPM());
         return clonedTime;
     }
-
+    // compares this Time with passed Time
     @Override
     public int compareTo(Object o) {
         Time cTime = (Time)o;
@@ -173,7 +177,7 @@ public class Time implements Cloneable, Comparable{
             return 1;
         }
     }
-
+    // called to check args passed to constructor
     private static boolean checkArgs(int h, int m){
         return (h > 12 || m > 59 || h < 1 || m < 0);
     }
