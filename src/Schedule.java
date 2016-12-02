@@ -28,11 +28,19 @@ public class Schedule implements Cloneable{
 
     //removes course if it falls on given time
     public void remove(Weekday day, Time time){
-        Iterator<Course> courseIterator = this.courses.iterator();
-        while (courseIterator.hasNext()){
-            Course curCourse = courseIterator.next();
-            if (curCourse.contains(day, time)){
-                this.courses.remove(curCourse);
+        System.out.println("Remove ran");
+        System.out.println(" " + day + ", at "+ time);
+        if (day != null) {
+            Iterator<Course> courseIterator = this.courses.iterator();
+            while (courseIterator.hasNext()) {
+                Course curCourse = courseIterator.next();
+                if (curCourse.contains(day, time)) {
+
+                    this.courses.remove(curCourse);
+                    System.out.println("Remove ran2");
+                    return;
+
+                }
             }
         }
     }
